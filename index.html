@@ -5,31 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ASEL Sale</title>
 <meta name="description" content="ASEL Pipeline Smarthome – quản lý hồ sơ bán hàng">
-<meta name="theme-color" content="#e11d48">
+<meta name="theme-color" content="#008069" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#202c33" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ASEL Sale">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
   /* nền trùng màu thanh trên / menu đáy của app để phần tai thỏ & vạch vuốt liền mạch */
-  html, body { margin: 0; height: 100%; background: #ffffff; overflow: hidden; }
-  @media (prefers-color-scheme: dark) { html, body { background: #17171f; } }
+  html, body { margin: 0; height: 100%; background: linear-gradient(#008069 50%, #ffffff 50%); overflow: hidden; }
+  @media (prefers-color-scheme: dark) { html, body { background: linear-gradient(#202c33 50%, #111b21 50%); } #splash { background: #111b21 !important; color: #8696a0 !important; } }
   #app { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; box-sizing: border-box; background: inherit;
          padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
   #splash { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 18px; font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #6b4650;
-            background: inherit; transition: opacity .35s; z-index: 2; }
-  #splash img { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 10px 30px rgba(225,29,72,.28); }
-  #splash .dot { width: 34px; height: 4px; border-radius: 4px; background: #f4c2cf; overflow: hidden; position: relative; }
-  #splash .dot::after { content: ""; position: absolute; inset: 0; width: 40%; background: #e11d48; border-radius: 4px;
+            gap: 18px; font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #667781;
+            background: #ffffff; transition: opacity .35s; z-index: 2; }
+  #splash img { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 8px 24px rgba(11,20,26,.18); }
+  #splash .dot { width: 34px; height: 4px; border-radius: 4px; background: #d1e7e2; overflow: hidden; position: relative; }
+  #splash .dot::after { content: ""; position: absolute; inset: 0; width: 40%; background: #008069; border-radius: 4px;
                         animation: run 1s ease-in-out infinite alternate; }
   @keyframes run { to { transform: translateX(150%); } }
   #splash.hide { opacity: 0; pointer-events: none; }
   #offline { display: none; text-align: center; padding: 0 24px; }
-  #offline button { margin-top: 10px; font: inherit; color: #fff; background: #e11d48; border: 0; border-radius: 999px; padding: 9px 20px; }
+  #offline button { margin-top: 10px; font: inherit; color: #fff; background: #008069; border: 0; border-radius: 999px; padding: 9px 20px; }
   @media (prefers-color-scheme: dark) { #splash { color: #e8c9d1; } }
 </style>
 </head>
