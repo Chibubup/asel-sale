@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ASEL Sale</title>
+<meta name="description" content="ASEL Pipeline Smarthome – quản lý hồ sơ bán hàng">
+<meta name="theme-color" content="#e11d48">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ASEL Sale">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+  html, body { margin: 0; height: 100%; background: #fff5f7; overflow: hidden; }
+  @media (prefers-color-scheme: dark) { html, body { background: #14090c; } }
+  #app { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block;
+         padding-top: env(safe-area-inset-top); box-sizing: border-box; background: inherit; }
+  #splash { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 18px; font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #6b4650;
+            background: inherit; transition: opacity .35s; z-index: 2; }
+  #splash img { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 10px 30px rgba(225,29,72,.28); }
+  #splash .dot { width: 34px; height: 4px; border-radius: 4px; background: #f4c2cf; overflow: hidden; position: relative; }
+  #splash .dot::after { content: ""; position: absolute; inset: 0; width: 40%; background: #e11d48; border-radius: 4px;
+                        animation: run 1s ease-in-out infinite alternate; }
+  @keyframes run { to { transform: translateX(150%); } }
+  #splash.hide { opacity: 0; pointer-events: none; }
+  #offline { display: none; text-align: center; padding: 0 24px; }
+  #offline button { margin-top: 10px; font: inherit; color: #fff; background: #e11d48; border: 0; border-radius: 999px; padding: 9px 20px; }
+  @media (prefers-color-scheme: dark) { #splash { color: #e8c9d1; } }
+</style>
+</head>
+<body>
+<div id="splash">
+  <img src="icon-192.png" alt="">
+  <div class="dot" id="loading"></div>
+  <div id="offline">Không có mạng. Kiểm tra wifi / 4G rồi thử lại.<br><button onclick="location.reload()">Thử lại</button></div>
+</div>
+<iframe id="app" title="ASEL Pipeline Smarthome" allow="clipboard-write; clipboard-read"></iframe>
+<script>
+  // Địa chỉ app Google Script (link duy nhất). Giữ nguyên query (?ma=...) để mở thẳng hồ sơ.
+  var GAS = 'https://script.google.com/macros/s/AKfycbzah9vWGjmFnDFJKeBpRx_PUASQB-L-EgRae5kBThArgLDyWMscpkjC12Bj_b0QTEbqgw/exec';
+  var splash = document.getElementById('splash'), frame = document.getElementById('app');
+  function showOffline() { document.getElementById('loading').style.display = 'none'; document.getElementById('offline').style.display = 'block'; }
+  if (!navigator.onLine) { showOffline(); }
+  else {
+    frame.addEventListener('load', function () { setTimeout(function () { splash.classList.add('hide'); }, 250); });
+    frame.src = GAS + location.search;
+    setTimeout(function () { splash.classList.add('hide'); }, 15000);
+  }
+  window.addEventListener('online', function () { if (!frame.src) location.reload(); });
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+</script>
+</body>
+</html>
