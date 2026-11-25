@@ -13,11 +13,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ASEL Sale">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="color-scheme" content="light dark">
 <style>
   /* nền trùng màu thanh trên / menu đáy của app để phần tai thỏ & vạch vuốt liền mạch */
-  html, body { margin: 0; height: 100%; background: linear-gradient(#008069 50%, #ffffff 50%); overflow: hidden; }
-  @media (prefers-color-scheme: dark) { html, body { background: linear-gradient(#202c33 50%, #111b21 50%); } #splash { background: #111b21 !important; color: #8696a0 !important; } }
+  html, body { margin: 0; height: 100%; background: #ffffff; overflow: hidden; }
+  /* KHÔNG dùng status-bar "black-translucent": iPhone tính thiếu chiều cao (lộ dải trắng ở đáy) và chừa tai thỏ 2 lần */
+  @media (prefers-color-scheme: dark) { html, body { background: #111b21; } #splash { background: #111b21 !important; color: #8696a0 !important; } }
   #app { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; box-sizing: border-box; background: inherit;
          padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
   #splash { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -31,7 +33,7 @@
   #splash.hide { opacity: 0; pointer-events: none; }
   #offline { display: none; text-align: center; padding: 0 24px; }
   #offline button { margin-top: 10px; font: inherit; color: #fff; background: #008069; border: 0; border-radius: 999px; padding: 9px 20px; }
-  @media (prefers-color-scheme: dark) { #splash { color: #e8c9d1; } }
+  
 </style>
 </head>
 <body>
