@@ -52,6 +52,21 @@
     setTimeout(function () { splash.classList.add('hide'); }, 15000);
   }
   window.addEventListener('online', function () { if (!frame.src) location.reload(); });
+  // Giữ hộ mã đăng nhập cho app Google (iPhone xóa bộ nhớ của khung Google mỗi lần tắt app).
+  // Chỉ nói chuyện với khung của Google Apps Script; chỉ lưu 2 mục dưới đây.
+  var KEYS = ['asel-gas-token', 'asel-gas-email'];
+  window.addEventListener('message', function (e) {
+    if (!/^https:\/\/[a-z0-9-]+\.script\.googleusercontent\.com$/.test(e.origin) || !e.data || !e.data.asel) return;
+    var d = e.data;
+    try {
+      if (d.asel === 'get') {
+        var kv = {}; KEYS.forEach(function (k) { var v = localStorage.getItem(k); if (v) kv[k] = v; });
+        e.source.postMessage({ asel: 'store', kv: kv }, e.origin);
+      } else if (d.asel === 'set' && KEYS.indexOf(d.k) >= 0) {
+        if (d.v) localStorage.setItem(d.k, String(d.v)); else localStorage.removeItem(d.k);
+      }
+    } catch (_) {}
+  });
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
 </script>
 </body>
