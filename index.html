@@ -21,7 +21,9 @@
   /* KHÔNG dùng status-bar "black-translucent": iPhone tính thiếu chiều cao (lộ dải trắng ở đáy) và chừa tai thỏ 2 lần */
   @media (prefers-color-scheme: dark) { html, body { background: #0b141a; } #splash { background: #111b21 !important; color: #8696a0 !important; } }
   #app { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; box-sizing: border-box; background: inherit;
-         padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+         padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left); }
+  /* đáy: app tự chừa vạch vuốt (nhận số đo sab qua tin nhắn) để menu đáy nằm sát như WhatsApp */
+  #sa { position: fixed; left: 0; bottom: 0; width: 1px; height: env(safe-area-inset-bottom, 0px); visibility: hidden; pointer-events: none; }
   #splash { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
             gap: 18px; font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #667781;
             background: #ffffff; transition: opacity .35s; z-index: 2; }
@@ -42,6 +44,7 @@
   <div class="dot" id="loading"></div>
   <div id="offline">Không có mạng. Kiểm tra wifi / 4G rồi thử lại.<br><button onclick="location.reload()">Thử lại</button></div>
 </div>
+<div id="sa"></div>
 <iframe id="app" title="ASEL Pipeline Smarthome" allow="clipboard-write; clipboard-read"></iframe>
 <script>
   // Địa chỉ app Google Script (link duy nhất). Giữ nguyên query (?ma=...) để mở thẳng hồ sơ.
@@ -64,7 +67,7 @@
     try {
       if (d.asel === 'get') {
         var kv = {}; KEYS.forEach(function (k) { var v = localStorage.getItem(k); if (v) kv[k] = v; });
-        e.source.postMessage({ asel: 'store', kv: kv }, e.origin);
+        e.source.postMessage({ asel: 'store', kv: kv, sab: document.getElementById('sa').offsetHeight }, e.origin);
       } else if (d.asel === 'set' && KEYS.indexOf(d.k) >= 0) {
         if (d.v) localStorage.setItem(d.k, String(d.v)); else localStorage.removeItem(d.k);
       }
